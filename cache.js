@@ -8,22 +8,24 @@ Cache.prototype.set = function (key, value) {
   if (this.dataObjects.length > 5){
     this.dataObjects.splice(0,1);
   }
-  this.dataObjectKeys = this.dataObjects.map ( function(dataObject){
-    return dataObject.key;
-  })
+  this._mapDataObjectsToKeys();
   console.log(this.dataObjectKeys)
 }
 
 Cache.prototype.get = function (key){
-  var position = this.dataObjectKeys.indexOf(key);
-  var dataObjectToGet = this.dataObjects.splice(position,1)[0];
+  var dataObjectToGetIndex = this.dataObjectKeys.indexOf(key);
+  var dataObjectToGet = this.dataObjects.splice(dataObjectToGetIndex,1)[0];
   this.dataObjects.push(dataObjectToGet);
-  this.dataObjectKeys = this.dataObjects.map ( function(dataObject){
-    return dataObject.key;
-  })
+  this._mapDataObjectsToKeys();
   console.log(dataObjectToGet);
   console.log(this.dataObjectKeys);
   return dataObjectToGet
+}
+
+Cache.prototype._mapDataObjectsToKeys = function (){
+  this.dataObjectKeys = this.dataObjects.map ( function(dataObject){
+    return dataObject.key;
+  })
 }
 
 
