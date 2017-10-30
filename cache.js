@@ -8,14 +8,19 @@ Cache.prototype.set = function (key, value) {
   if (this.dataObjects.length > 5){
     this.dataObjects.splice(0,1);
   }
+  this.mapDataObjectsToKeys();
 }
 
 Cache.prototype.get = function (key){
   var dataObjectToGetIndex = this.dataObjectKeys.indexOf(key);
-  var dataObjectToGet = this.dataObjects.splice(dataObjectToGetIndex,1)[0];
-  this.dataObjects.push(dataObjectToGet);
-  console.log(dataObjectToGet);
-  return dataObjectToGet
+  if (dataObjectToGetIndex === -1){
+    console.log("There are no items in the cache with this key")
+  }else{
+    var dataObjectToGet = this.dataObjects.splice(dataObjectToGetIndex,1)[0];
+    this.dataObjects.push(dataObjectToGet);
+    console.log(dataObjectToGet);
+    return dataObjectToGet
+  }
 }
 
 Cache.prototype.mapDataObjectsToKeys = function (){
@@ -33,18 +38,13 @@ var DataObject = function(key, value) {
 
 var cache = new Cache()
 cache.set("example", 1)
-cache.mapDataObjectsToKeys();
 cache.set("example2", 2)
-cache.mapDataObjectsToKeys();
 cache.set("example3", 3)
-cache.mapDataObjectsToKeys();
 cache.set("example4", 4)
-cache.mapDataObjectsToKeys();
 cache.set("example5", 5)
-cache.mapDataObjectsToKeys();
 cache.set("example6", 6)
-cache.mapDataObjectsToKeys();
 cache.get("example3")
 cache.mapDataObjectsToKeys();
 cache.get("example3")
 cache.mapDataObjectsToKeys();
+cache.get("hello")

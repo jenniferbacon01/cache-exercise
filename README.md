@@ -18,4 +18,4 @@ In your command line from the cache-exercise directory:
 ````
 Comments
 -----
-Initially, the get method looped through the array, checking each element by key in order to return the correct data object. I have now improved the speed (would be significant for a scaled up model) by mapping the data object array to another array of each data object's key. This must be called after any item is added or retrieved. This way, the index position of the element to be retrieved can be found more quickly from the key array, and used to retrieve the data object from the data object array.
+Initially, the get method looped through the array, checking each element by key in order to return the correct data object. I have now improved the speed (would be significant for a scaled up model) by adding mapDataObjectsToKeys (mapping the data object array to another array of each data object's key). This is called before the end of the set method but must be manually called after get, to prepare for the next get. This way, the index position of the element to be retrieved can be found more quickly from the key array, and used to retrieve the data object from the data object array.
