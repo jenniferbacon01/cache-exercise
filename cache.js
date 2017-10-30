@@ -8,19 +8,21 @@ Cache.prototype.set = function (key, value) {
   if (this.dataObjects.length > 5){
     this.dataObjects.splice(0,1);
   }
-  console.log(this.dataObjects)
+  this.dataObjectKeys = this.dataObjects.map ( function(dataObject){
+    return dataObject.key;
+  })
+  console.log(this.dataObjectKeys)
 }
 
 Cache.prototype.get = function (key){
-  var dataObjectToGet;
-  var that = this;
-  this.dataObjects.forEach( function(dataObject, index ){
-    if (dataObject.key === key){
-      dataObjectToGet = that.dataObjects.splice(index,1)[0];
-    };
-  })
+  var position = this.dataObjectKeys.indexOf(key);
+  var dataObjectToGet = this.dataObjects.splice(position,1)[0];
   this.dataObjects.push(dataObjectToGet);
-  console.log(this.dataObjects)
+  this.dataObjectKeys = this.dataObjects.map ( function(dataObject){
+    return dataObject.key;
+  })
+  console.log(dataObjectToGet);
+  console.log(this.dataObjectKeys);
   return dataObjectToGet
 }
 
@@ -36,5 +38,5 @@ cache.set("example2", 2)
 cache.set("example3", 3)
 cache.set("example4", 4)
 cache.set("example5", 5)
-cache.get("example3")
 cache.set("example6", 6)
+cache.get("example3")
